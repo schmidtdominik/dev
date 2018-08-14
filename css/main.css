@@ -1,0 +1,96 @@
+@font-face {
+  font-family: 'Big John';
+  src: url('../fonts/BIG JOHN.otf');
+}
+
+#title {
+  text-transform: uppercase;
+  font-size: 5.7rem;
+  font-family: 'Big John', sans-serif;
+  color: #52D681;
+  letter-spacing: 1px;
+  text-decoration: none;
+}
+
+#titlewrapper {
+  margin-top: 8rem;
+}
+
+@media (max-width: 455px) {
+  #titlewrapper {
+    margin-top: 8%;
+  }
+}
+
+h1 {
+  margin-bottom: 0;
+}
+
+hr {
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.navitem {
+  text-decoration: none;
+
+  color: #55505C;
+  font-size: 1.5rem;
+  letter-spacing: .2rem;
+  margin-right: 2.3em;
+  line-height: 3.5rem;
+  text-transform: uppercase;
+  -webkit-transition: all 0.15s; /* Safari */
+  transition: all 0.15s;
+  padding-bottom: 2px;
+  font-weight: 700;
+
+}
+
+.navwrapper {
+  display: inline-block;
+}
+
+@media (max-width: 455px) {
+  .navwrapper {
+      display: block;
+  }
+}
+
+.navitem:hover {
+  /*color: #B67528;*/
+  color: #55505C;
+  border-bottom: 2.3px solid #52D681;
+}
+
+nav {
+  background-color: white;
+  z-index: 100;
+  padding-bottom: 1rem;
+  margin-bottom: 4rem;
+}
+
+@media (max-width: 455px) {
+  nav {
+    margin-bottom: 0;
+  }
+}
+
+footer {
+  text-align: center;
+  font-weight: 500;
+}
+
+footer a {
+  color: #222;
+}
+
+footer span {
+  background-color: #52D681;
+  color: white;
+  display: inline-block;
+  padding: 0 5px;
+  font-weight: 600;
+  border-radius: 4px;
+  margin-bottom: 3rem;
+}
