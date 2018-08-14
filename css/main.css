@@ -1,6 +1,7 @@
 @font-face {
   font-family: 'Big John';
-  src: url('../fonts/BIG JOHN.otf');
+  src: local('Big John'),
+       url('../fonts/BIG JOHN.otf') format('otf');
 }
 
 #title {
