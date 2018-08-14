@@ -1,7 +1,6 @@
 @font-face {
   font-family: 'Big John';
-  src: local('Big John'),
-       url('../fonts/BIG JOHN.otf') format('otf');
+  src: url('BIG JOHN.otf') format('otf');
 }
 
 /*https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700|Crimson+Text:400,600*/
