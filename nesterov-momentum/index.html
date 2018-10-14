@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>[Draft] Three Steps to Understanding Nesterov Momentum (NAG) - Dominik Schmidt</title>
+  <meta name="author" content="Dominik Schmidt">
+  <meta name="theme-color" content="#52D681"/>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123900161-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-123900161-1');
+  </script>
+
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+           CommonHTML: {
+             scale: (MathJax.Hub.Browser.isChrome ? 100 : 100)
+           }
+         });
+
+
+  </script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="../css/normalize.css">
+  <link rel="stylesheet" href="../css/skeleton.css">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/article.css">
+
+  <link rel="stylesheet" href="../highlight/styles/hopscotch.css"><!--foundation/hopscotch-->
+  <script src="../highlight/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="../images/favicon.png">
+
+</head>
+<body>
+
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <div class="container">
+    <div class="row">
+      <div style="margin-top: 8%">
+          <h1>
+            <a href="../index.html">
+              <span id="title">
+                Dominik Schmidt
+              </span>
+            </a>
+            <!--<a href="index.html">
+              <span id="by-me">
+
+              </span>
+            </a>-->
+          </h1>
+        <hr>
+        <nav>
+          <span style="display: inline-block;" ><a class="navitem" href="../index.html"><i class="far fa-newspaper"></i>&nbsp;Reads</a></span>
+          <span style="display: inline-block;" ><a class="navitem" href="../datasets.html"><i class="fas fa-sitemap"></i>&nbsp;Datasets</a></span>
+          <span style="display: inline-block;" ><a class="navitem" href="../about.html"><i class="fas fa-map-marker-alt"></i>&nbsp;About</a></span>
+
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <div class="container article">
+      <div id='header-box'>
+
+
+        <!--START OF HEADING-->
+        <div style="display:flex;justify-content:center;align-items:center;">
+          <img src="assets/cover.png" id="header-img" alt="">
+        </div>
+
+
+        <div id="header-text">
+          <h1 class="article-title">
+            [Draft] Three Steps to Understanding Nesterov Momentum (NAG)
+          </h1>
+          <time datetime="2018-09-03 00:00:00">September 3, 2018 ⧗ 2 minute read</time><br>
+        </div>
+      </div>
+      <!--END OF HEADING-->
+
+      <span class="article-text">
+        
+<strong>Momentum</strong> and <strong>Nesterov Momentum</strong> (also called Nesterov Accelerated Gradient/NAG) are slight variations of normal gradient descent that can speed up training and improve convergence significantly. <br>
+<h2 id="first:-gradient-descent"> First: Gradient Descent</h2>
+The most common method to train a neural network is by using (stochastic) gradient descent (SGD). The way this works is you define a loss or error function \(l(\theta)\) that expresses how well your weights & biases (\(\theta\)) allow the network to fit your training data. By, then adjusting the network parameters in a way that reduces this loss you can train your network.<br>
+
+Formally the update rule in SGD is defined as \(\theta_{t+1} = \theta_t − \eta\nabla l(\theta)\). Here you take the gradient \(\nabla\) of the loss function \(l\) which tells you in which direction you have to move through parameter space to increase the loss. Then you go in the opposite direction \(-\nabla l\) (in which the loss decreases) and move by a distance dependent on the learning rate \(\eta\).<br>
+<br>
+
+This works very well in most cases and is the foundation of much of modern deep learning.<br>
+<br>
+<h2 id="second:-gradient-descent-with-vanilla-momentum"> Second: Gradient Descent with (vanilla) Momentum</h2>
+Momentum is essentially a small change to the SGD parameter update that averages the movement through parameter space over multiple time steps. This speeds up movement along directions of strong improvement (loss decrease) and also helps the network avoid local minima.<br>
+
+With momentum, the SGD update rule is changed to: $$v_{t+1} = \mu v_t-\eta\nabla l(\theta)\\\theta_{t+1} = \theta_t + v_{t+1}$$ <br>
+
+Here \(v\) is the velocity and \(\mu\) is the momentum parameter which controls how fast the velocity changes and how much the local gradient influences long term movement. <br>
+<br>
+<h2 id="third:-gradient-descent-with-nesterov-momentum"> Third: Gradient Descent with Nesterov Momentum</h2>
+(This section is loosely based on <a href="http://www.cs.toronto.edu/~fritz/absps/momentum.pdf">this</a> paper.)<br>
+
+new sgd update rule:<br>
+
+$$v_{t+1} = \mu v_t-\eta\nabla l(\theta+ \mu v_t)\\\theta_{t+1} = \theta_t + v_{t+1}$$ <br>
+<br>
+<br>
+<br>
+<br>
+
+<section id="article_footer"><h2>Further Reading</h2><br><ul><li>...</li></ul></section>
+      </span>
+  </div>
+
+  <br><br>
+
+  <footer class="container">
+    <span><i class="fas fa-copyright"></i> 2018 Dominik Schmidt</span><br>
+  </footer>
+
+  <br>
+
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
+</html>

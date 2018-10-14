@@ -9,6 +9,16 @@
   <meta name="author" content="Dominik Schmidt">
   <meta name="theme-color" content="#52D681"/>
 
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123900161-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-123900161-1');
+  </script>
+
   <!-- Mobile Specific Metas
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -89,22 +99,84 @@
     </div>
   </div>
 
-  <div class="container article">
-    <a href="example"><img src="example/assets/cover.jpg" class="article-img" alt=""></a>
-    <h4 class="article-title"><a href="example">
-      Example
-    </a></h4>
-    <span class="article-preview-text">
-      
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget libero quis est cursus viverra. Duis venenatis fringilla condimentum. Nulla facilisis nisl tellus, vitae vestibulum lectus pellentesque vitae. Maecenas faucibus sagittis dolor ac tempus. Aenean purus lacus, ultricies sed risus at, tempus iaculis dolor. Vestibulum at neque et sapien mattis feugiat non id dui. Phasellus bibendum  orci sed suscipit ornare. Nunc iaculis tellus eu convallis varius. Phasellus vel posuere odio. Quisque nisl enim, scelerisque at neque a, finibus interdum enim. Curabitur auctor eleifend pellentesque. Quisque ac purus blandit, rutrum ligula at, interdum tortor. 
-    </span>
-    <a class="continue-reading article-preview-text" href="example">
-      Continue reading
-      <span class="read-time">
-        <span style="font-size: 0.8em;">⧗</span>
-         4'
+  <div class="container article article-subsection">
+    <a href="latent-space-vis"><img src="latent-space-vis/assets/cover.png" class="header-img" alt=""></a>
+    <div class="header-text">
+      <h4 class="article-title"><a href="latent-space-vis">
+        [Draft] GAN Latent Space Visualization & Exploration
+      </a></h4>
+      <span class="article-preview-text">
+        
+This article is a showcase of GAN-generated images. All animated videos were generated frame by frame and the animation was created by sampling the latent space at different locations.
       </span>
-    </a>
+      <a class="continue-reading article-preview-text" href="latent-space-vis">
+        Continue reading
+        <span class="read-time">
+          <span style="font-size: 0.8em;">⧗</span>
+           1'
+        </span>
+      </a>
+    </div>
+</div>
+<div class="container article article-subsection">
+    <a href="nesterov-momentum"><img src="nesterov-momentum/assets/cover.png" class="header-img" alt=""></a>
+    <div class="header-text">
+      <h4 class="article-title"><a href="nesterov-momentum">
+        [Draft] Three Steps to Understanding Nesterov Momentum (NAG)
+      </a></h4>
+      <span class="article-preview-text">
+        
+Momentum and Nesterov Momentum (also called Nesterov Accelerated Gradient/NAG) are slight variations of normal gradient descent that can speed up training and improve convergence significantly. 
+      </span>
+      <a class="continue-reading article-preview-text" href="nesterov-momentum">
+        Continue reading
+        <span class="read-time">
+          <span style="font-size: 0.8em;">⧗</span>
+           2'
+        </span>
+      </a>
+    </div>
+</div>
+<div class="container article article-subsection">
+    <a href="three-python-modules"><img src="three-python-modules/assets/cover.png" class="header-img" alt=""></a>
+    <div class="header-text">
+      <h4 class="article-title"><a href="three-python-modules">
+        [Draft] <code>tqdm</code>, <code>imageio</code> and <code>Seaborn</code>: Three essential python modules for machine learning and data science.
+      </a></h4>
+      <span class="article-preview-text">
+        
+Learn how to use <code>tqdm</code> to display progress bars with a single line of code, <code>imageio</code> to load and save images in a million different formats and <code>Seaborn</code> to create beautiful graphs and visualizations.
+      </span>
+      <a class="continue-reading article-preview-text" href="three-python-modules">
+        Continue reading
+        <span class="read-time">
+          <span style="font-size: 0.8em;">⧗</span>
+           1'
+        </span>
+      </a>
+    </div>
+</div>
+<div class="container article article-subsection">
+    <a href="tensorflow-data-pipeline"><video autoplay="true" class="header-img" autoplay loop playsinline muted>
+                    <source src=" tensorflow-data-pipeline/assets/cover.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video></a>
+    <div class="header-text">
+      <h4 class="article-title"><a href="tensorflow-data-pipeline">
+        Why <code>tf.data</code> is much better than <code>feed_dict</code> and how to build a simple data pipeline in 5 minutes.
+      </a></h4>
+      <span class="article-preview-text">
+        
+Most beginner tensorflow tutorials introduce the reader to the <code>feed_dict</code> method of loading data into your model where data is passed to tensorflow through the <code>tf.Session.run()</code> or <code>tf.Tensor.eval()</code> function calls. There is, however, a much better and almost easier way of doing this. Using the <code>tf.data</code> API you can create high-performance data pipelines in just a few lines of code. 
+      </span>
+      <a class="continue-reading article-preview-text" href="tensorflow-data-pipeline">
+        Continue reading
+        <span class="read-time">
+          <span style="font-size: 0.8em;">⧗</span>
+           5'
+        </span>
+      </a>
+    </div>
 </div>
 
 
