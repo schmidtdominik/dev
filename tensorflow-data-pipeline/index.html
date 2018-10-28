@@ -128,7 +128,7 @@ A <code>tf.data.Dataset</code> for an image pipeline could (schematically) look 
     ...
 ]
 </code></pre>
-You can then use a <code>tf.data.Iterator</code> to retrieve  image-label pairs one by one. In practice, multiple image-label pairs would be batched together so that the iterator pulls out one entire batch at a time. <br>
+You can then use a <code>tf.data.Iterator</code> to retrieve image-label pairs one by one. In practice, multiple image-label pairs would be batched together so that the iterator pulls out one entire batch at a time. <br>
 <br>
 
 A dataset can be created either from a source (like a list of filenames in Python) or by applying a transformation to an existing dataset. Here are some examples of possible transformations:<br>
@@ -153,7 +153,8 @@ dataset = tf.data.Dataset.from_tensor_slices(files)
 </code></pre>
 Now define a function to load an image (as a tensor) from its path and use <code>tf.data.Dataset.map()</code> to apply this function to all elements (file paths) in the dataset.<sup><a id="ref1ref" href="#ref1">[1]</a></sup> You can also add a <code>num_parallel_calls=n</code> argument to <code>map()</code> to parallelize the function calls.<br>
 
-<pre><code>def load_image(path):
+<pre><code># <span class="highlight"><a href="https://cs230-stanford.github.io/tensorflow-input-data.html#building-an-image-data-pipeline">Source</a></span>
+def load_image(path):
     image_string = tf.read_file(path)
 
     # Don't use tf.image.decode_image, or the output shape will be undefined
@@ -170,8 +171,8 @@ Now define a function to load an image (as a tensor) from its path and use <code
 dataset = dataset.map(load_image, num_parallel_calls=8)
 </code></pre>
 Next use <code>tf.data.Dataset.batch()</code> to create batches:
-<pre><code># Create batches of 2 images each
-dataset = dataset.batch(2)
+<pre><code># Create batches of 64 images each
+dataset = dataset.batch(64)
 </code></pre>
 You may also want to add <code>tf.data.Dataset.prefetch(buffer_size)</code> to the end of your pipeline. This ensures that the next batch is always immediately available to the GPU and reduces GPU starvation as mentioned above. <code>buffer_size</code> is the number of batches that should be prefetched. <code>buffer_size=1</code> is usually sufficient although in some cases, especially when the processing time per batch varies, it can help to increase it.<br>
 
@@ -214,7 +215,8 @@ dataset = dataset.shuffle(len(files))
 </code></pre><h3 id="data-augmentation"> Data augmentation</h3>
 You can use the functions <code>tf.image.random_flip_left_right()</code>, <code>tf.image.random_brightness()</code>, <code>tf.image.random_saturation()</code> to perform simple data augmentation on your images. <sup><a id="ref1ref" href="#ref1">[1]</a></sup><br>
 
-<pre><code>def train_preprocess(image):
+<pre><code># <span class="highlight"><a href="https://cs230-stanford.github.io/tensorflow-input-data.html#building-an-image-data-pipeline">Source</a></span>
+def train_preprocess(image):
     image = tf.image.random_flip_left_right(image)
 
     image = tf.image.random_brightness(image, max_delta=32.0 / 255.0)
@@ -223,7 +225,37 @@ You can use the functions <code>tf.image.random_flip_left_right()</code>, <code>
     image = tf.clip_by_value(image, 0.0, 1.0)
 
     return image
-</code></pre><br>
+</code></pre><h3 id="labels"> Labels</h3>
+To load labels (or other metadata) along your images simply include them when creating the intial dataset:
+<pre><code># <code>files</code> is a python list of image filenames
+# <code>labels</code> is a numpy array with label data for each image
+dataset = tf.data.Dataset.from_tensor_slices((files, labels))
+</code></pre>
+Make sure any functions that you apply to your dataset with <code>.map()</code> allow label data to pass through:<br>
+
+<pre><code>def load_image(path, label):
+    # load image
+    
+    return image, label
+
+dataset = dataset.map(load_image)
+</code></pre>
+
+<div class="specialbox emailbox">
+    <strong>Any questions? Suggestions? More explanation needed?</strong><br>
+    Telegram: <a href="https://t.me/schmidtdominik">@schmidtdominik</a><br>
+    Email: <a id="email" target="_blank">&#115;&#099;&#104;&#109;&#105;&#100;&#116;&#100;&#111;&#109;&#105;&#110;&#105;&#107;&#051;&#048;&#032;[&#097;&#116;]&#032;&#103;&#109;&#097;&#105;&#108;&#046;&#032;[&#100;&#111;&#116;]&#032;&#099;&#111;&#109;</a><br>
+    Reddit: <a href="https://reddit.com/u/dominik_schmidt">u/dominik_schmidt</a><br>
+    I usually reply the same or next day.
+</div>
+<script type="text/javascript">
+    var string1 = "schmidtdominik30";
+    var string2 = "@";
+    var string3 = "gmail.com";
+    var string4 = string1 + string2 + string3;
+    document.getElementById('email').innerHTML = string4;
+    document.getElementById('email').href = "mailto:" + string4 + "?subject=Hi!";
+</script>
 
 <section id="article_footer"><h2>Further Reading</h2><br><ul><li><a href="https://docs.google.com/presentation/d/16kHNtQslt-yuJ3w8GIx-eEH6t_AvFeQOchqGRFpAD7U/edit">Google Slides presentation by one of the developers of tf.data</a></li><li><a href="https://cs230-stanford.github.io/tensorflow-input-data.html">Stanford CS230 - Article about tf.data</a></li><li><a href="https://www.tensorflow.org/guide/datasets">tensorflow.org - Importing Data</a></li><li><a href="https://www.tensorflow.org/performance/datasets_performance">tensorflow.org - Input Pipeline Performance Guide</a></li></ul><hr><h2>References</h2><br><ol><li><span id="ref1"><a href="https://cs230-stanford.github.io/tensorflow-input-data.html#building-an-image-data-pipeline">Stanford CS230 - Article about tf.data</a></span> <a href="#ref1ref"><i class="fas fa-caret-left"></i></a></li></ol></section>
       </span>
