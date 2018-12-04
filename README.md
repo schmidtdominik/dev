@@ -1,1 +1,0 @@
-# schmidtdominik.github.io
